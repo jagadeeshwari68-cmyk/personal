@@ -17,7 +17,12 @@ body {
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* Floating hearts background */
+/* Blur background when popup opens */
+.blur {
+  filter: blur(6px);
+}
+
+/* Floating hearts */
 .heart {
   position: absolute;
   bottom: -20px;
@@ -86,14 +91,15 @@ button {
 }
 
 .popup-content {
-  background: #fff0f6;
+  background: linear-gradient(135deg, #fff0f6, #ffe6f2);
   padding: 30px;
   border-radius: 25px;
   text-align: center;
   width: 90%;
   max-width: 350px;
   position: relative;
-  box-shadow: 0 0 25px rgba(255,0,100,0.4);
+  box-shadow: 0 0 25px rgba(255,0,120,0.4);
+  border: 2px solid #ff99cc;
 }
 
 .close {
@@ -131,15 +137,12 @@ button {
     <h3>I love you Raja 💋❤️</h3>
     <p>No matter what happens, nothing will ever change my feelings for you. 🤗</p>
     <h4>Take My Virtual kisses and hugs 🤗💋</h4>
-        <h3>I miss you Kanna ummah 💋❤️</h3>
+    <h3>I miss you Kanna ummah 💋❤️</h3>
   </div>
 </div>
 
 <!-- Hidden YouTube audio -->
-<iframe id="player"
-src=""
-allow="autoplay">
-</iframe>
+<iframe id="player" allow="autoplay"></iframe>
 
 <script>
 const noBtn = document.getElementById("noBtn");
@@ -147,15 +150,16 @@ const yesBtn = document.getElementById("yesBtn");
 const tooltip = document.getElementById("tooltip");
 const popup = document.getElementById("popup");
 const player = document.getElementById("player");
+const mainContent = document.getElementById("mainContent");
 
-/* NO button movement + tooltip */
+/* NO button tooltip */
 noBtn.addEventListener("mouseover", () => {
   const x = Math.random() * (window.innerWidth - 120);
   const y = Math.random() * (window.innerHeight - 80);
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
 
-  tooltip.innerHTML = "Please click Yes 😂";
+  tooltip.innerHTML = "Please click Yes 👀😂";
   tooltip.style.left = x + "px";
   tooltip.style.top = (y - 30) + "px";
   tooltip.style.display = "block";
@@ -174,19 +178,23 @@ yesBtn.addEventListener("mouseout", () => {
   tooltip.style.display = "none";
 });
 
-/* YES click popup + play song */
+/* YES click popup + blur + song */
 yesBtn.addEventListener("click", () => {
   popup.style.display = "flex";
-  player.src = "https://www.youtube.com/embed/7Yru3_H5dQo?autoplay=1&controls=0";
+  mainContent.classList.add("blur");
+
+  player.src =
+    "https://www.youtube.com/embed/7Yru3_H5dQo?autoplay=1&controls=0&loop=1&playlist=7Yru3_H5dQo";
 });
 
 /* Close popup */
 function closePopup() {
   popup.style.display = "none";
+  mainContent.classList.remove("blur");
   player.src = "";
 }
 
-/* Floating hearts generator */
+/* Floating hearts */
 setInterval(() => {
   const heart = document.createElement("div");
   heart.className = "heart";
