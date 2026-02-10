@@ -3,19 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Love font -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
 <title>Be My Valentine 💖</title>
 
 <style>
 body {
   margin: 0;
   min-height: 100vh;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #ff758c, #ff7eb3);
   font-family: 'Segoe UI', sans-serif;
-  padding: 15px;
+  overflow: hidden;
 }
 
 .blur {
@@ -25,19 +28,15 @@ body {
 .container {
   text-align: center;
   background: rgba(255,255,255,0.25);
-  padding: 30px 20px;
+  padding: 30px;
   border-radius: 25px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-  z-index: 2;
-  transition: 0.3s;
   max-width: 420px;
-  width: 100%;
+  width: 90%;
 }
 
 h1 {
   color: #b30059;
-  font-size: 2rem;
-  margin-bottom: 20px;
 }
 
 button {
@@ -60,16 +59,6 @@ button {
   position: absolute;
 }
 
-.tooltip {
-  position: absolute;
-  background: #000;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  display: none;
-}
-
 /* Popup */
 .popup {
   position: fixed;
@@ -78,37 +67,48 @@ button {
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 5;
-  padding: 20px;
 }
 
 .popup-content {
-  background: linear-gradient(135deg, #ffe6f0, #ffd1e6);
-  padding: 25px;
-  border-radius: 20px;
+  position: relative;
+  background: linear-gradient(135deg, #fff0f6, #ffd6e7);
+  padding: 35px;
+  border-radius: 25px;
   text-align: center;
-  animation: pop 0.4s ease;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  font-family: 'Pacifico', cursive;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.3);
   max-width: 350px;
-  width: 100%;
 }
 
-@keyframes pop {
-  from { transform: scale(0.6); }
-  to { transform: scale(1); }
+/* Corner close button */
+.closeX {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #ff3366;
 }
 
-.closeBtn {
-  margin-top: 15px;
-  background: #ff3366;
-  color: white;
+/* Decorative hearts */
+.popup-content::before {
+  content: "❤️ 💕 💖 💗 ❤️";
+  display: block;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.popup-content::after {
+  content: "💖 💕 ❤️ 💗 💕";
+  display: block;
+  margin-top: 10px;
+  font-size: 20px;
 }
 
 /* Floating hearts */
 .heart {
   position: absolute;
   bottom: -20px;
-  color: rgba(255,255,255,0.8);
   font-size: 18px;
   animation: float 6s linear infinite;
 }
@@ -117,108 +117,68 @@ button {
   from { transform: translateY(0); opacity: 1; }
   to { transform: translateY(-100vh); opacity: 0; }
 }
-
-/* Desktop adjustments */
-@media (min-width: 768px) {
-  h1 { font-size: 2.6rem; }
-  button { font-size: 1.2rem; padding: 12px 35px; }
-  .container { padding: 40px; }
-}
 </style>
 </head>
 
 <body>
 
-<iframe id="ytPlayer" width="0" height="0" src="" allow="autoplay"></iframe>
+<!-- Music -->
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
 
 <div class="container" id="mainContent">
   <h1>Kanny Will you be my Valentine? 💕</h1>
   <button id="yesBtn">Yes 💖</button>
   <button id="noBtn">No 😜</button>
-  <div class="tooltip" id="tooltip">Please click Yes 🥺❤️</div>
 </div>
 
 <div class="popup" id="popup">
   <div class="popup-content">
-    <h2 id="typeText"></h2>
+    <div class="closeX" id="closeBtn">✕</div>
+
+    <h2>Happy Valentine’s Day, My Love 💕 🤗</h2>
     <h3>I love you Raja 💋❤️</h3>
-    <p>Time, distance, or anything else will ever change my feelings for you.</p>
-    <h4>Virtual kisses and hugs 🤗💋</h4>
-    <button class="closeBtn" id="closeBtn">Close</button>
+    <p>No matter what happens, nothing will ever change my feelings for you. 🤗</p>
+    <h4>Take My Virtual kisses and hugs 🤗💋</h4>
+
   </div>
 </div>
 
 <script>
 const noBtn = document.getElementById("noBtn");
-const tooltip = document.getElementById("tooltip");
 const popup = document.getElementById("popup");
 const mainContent = document.getElementById("mainContent");
-const ytPlayer = document.getElementById("ytPlayer");
-
-const message = "Happy Valentine’s Day, my love 💕 I miss you…";
-let index = 0;
-
-function typeEffect() {
-  if (index < message.length) {
-    document.getElementById("typeText").innerHTML += message.charAt(index);
-    index++;
-    setTimeout(typeEffect, 60);
-  }
-}
+const music = document.getElementById("music");
 
 noBtn.addEventListener("mouseover", () => {
   const x = Math.random() * (window.innerWidth - 120);
   const y = Math.random() * (window.innerHeight - 80);
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
-  tooltip.style.left = x + "px";
-  tooltip.style.top = (y - 30) + "px";
-  tooltip.style.display = "block";
 });
 
 document.getElementById("yesBtn").addEventListener("click", () => {
   popup.style.display = "flex";
   mainContent.classList.add("blur");
-  ytPlayer.src = "https://www.youtube.com/embed/7Yru3_H5dQo?autoplay=1&loop=1&playlist=7Yru3_H5dQo";
-  typeEffect();
-  startConfetti();
+  music.play();
 });
 
 document.getElementById("closeBtn").addEventListener("click", () => {
   popup.style.display = "none";
   mainContent.classList.remove("blur");
-  ytPlayer.src = "";
-  document.getElementById("typeText").innerHTML = "";
-  index = 0;
+  music.pause();
 });
 
+/* Floating hearts */
 setInterval(() => {
   const heart = document.createElement("div");
   heart.className = "heart";
   heart.innerHTML = "❤️";
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 15 + "px";
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 6000);
-}, 300);
-
-function startConfetti() {
-  for (let i = 0; i < 100; i++) {
-    const confetti = document.createElement("div");
-    confetti.style.position = "fixed";
-    confetti.style.width = "8px";
-    confetti.style.height = "8px";
-    confetti.style.background = `hsl(${Math.random()*360},100%,50%)`;
-    confetti.style.left = Math.random() * 100 + "vw";
-    confetti.style.top = "-10px";
-    confetti.style.zIndex = "10";
-    confetti.style.borderRadius = "50%";
-    confetti.style.transition = "transform 3s linear";
-    document.body.appendChild(confetti);
-    setTimeout(() => confetti.style.transform = "translateY(100vh)", 100);
-    setTimeout(() => confetti.remove(), 3000);
-  }
-}
+}, 400);
 </script>
 
 </body>
