@@ -125,7 +125,7 @@
 </audio>
 
 <div class="container">
-  <h1>Will you be my Valentine? 💕</h1>
+  <h1>Kanny Will you be my Valentine? 💕</h1>
   <button id="yesBtn">Yes 💖</button>
   <button id="noBtn">No 😜</button>
   <div class="tooltip" id="tooltip">Please click Yes 🥺❤️</div>
@@ -134,8 +134,10 @@
 <!-- Popup -->
 <div class="popup" id="popup">
   <div class="popup-content">
-    <h2>I love you Raja 💋❤️</h2>
-    <p>Ummah forever 😘💕</p>
+    <h1> Happy Valentine’s Day, my love 💕 I miss you… ummmahhhh 😘</h1>
+    <h3>I love you Raja 💋❤️</h3>
+    <p>No fights, misunderstandings, ego, or even long distance will ever change my feelings for you.😘💕</p>
+     <h4>Take my virtual kisses and hugs 🤗💋 </h4>
   </div>
 </div>
 
